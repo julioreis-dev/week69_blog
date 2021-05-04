@@ -4,7 +4,6 @@ from flask_ckeditor import CKEditor
 from datetime import date
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import ForeignKey, Column, Integer
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
@@ -13,7 +12,7 @@ from functools import wraps
 import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 ckeditor = CKEditor(app)
 Bootstrap(app)
 # app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -66,24 +65,7 @@ class Comment(db.Model):
     comment_author = relationship("User", back_populates="comments")
     parent_post = relationship('BlogPost', back_populates='comments')
 
-# class User(UserMixin, db.Model):
-#     __tablename__ = "users"
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(1000))
-#     email = db.Column(db.String(100), unique=True)
-#     password = db.Column(db.String(100))
-#     posts = db.relationship('BlogPost', backref='users', lazy='dynamic')
-#
-# class BlogPost(db.Model):
-#     __tablename__ = "blog_posts"
-#     id = db.Column(db.Integer, primary_key=True)
-#     author = db.Column(db.String(250), nullable=False)
-#     title = db.Column(db.String(250), unique=True, nullable=False)
-#     subtitle = db.Column(db.String(250), nullable=False)
-#     date = db.Column(db.String(250), nullable=False)
-#     body = db.Column(db.Text, nullable=False)
-#     img_url = db.Column(db.String(250), nullable=False)
-#     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
 db.create_all()
 
 
@@ -228,5 +210,4 @@ def delete_post(post_id):
 
 
 if __name__ == "__main__":
-    # app.run(host='0.0.0.0', port=5000)
     app.run(debug=True)
