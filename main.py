@@ -11,6 +11,7 @@ from flask_gravatar import Gravatar
 from functools import wraps
 import os
 
+##SET APLICATION
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 ckeditor = CKEditor(app)
